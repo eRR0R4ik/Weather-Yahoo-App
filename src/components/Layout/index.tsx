@@ -2,22 +2,24 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { getLocation } from '../../actions';
 import { Header, Loader } from '..';
+import CustomizedSnackbars from '../SnackBar';
 
 interface LayoutProps {
   getLocation?: any;
-  userData?: any;
   fetching: boolean;
+  error?: boolean;
+  msg?: string;
 }
 
 interface LayoutState {}
 
 class Layout extends React.Component<LayoutProps, LayoutState> {
   componentDidMount() {
-    // this.props.getLocation();
+    this.props.getLocation();
   }
 
   render() {
-    const { fetching } = this.props;
+    const { fetching, error, msg } = this.props;
 
     return (
       <React.Fragment>
@@ -29,15 +31,23 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             {this.props.children}
           </div>
         )}
+        <CustomizedSnackbars message={msg} error={error} />
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = ({ geolocation }: { geolocation: any }) => {
+const mapStateToProps = ({
+  geolocation,
+  weather
+}: {
+  geolocation: any;
+  weather: any;
+}) => {
   return {
     fetching: geolocation.fetching,
-    userData: geolocation.userGeolocation
+    error: geolocation.error || weather.error,
+    msg: geolocation.msg || weather.msg
   };
 };
 

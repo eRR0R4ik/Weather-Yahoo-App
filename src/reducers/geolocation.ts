@@ -1,7 +1,8 @@
 import {
   FETCH_GEOLOCATION_START,
   FETCH_GEOLOCATION_SUCCESS,
-  FETCH_GEOLOCATION_FAILURE
+  FETCH_GEOLOCATION_FAILURE,
+  HIDE_GEOLOCATION_MSG
 } from '../shared';
 
 const initialState = {
@@ -10,7 +11,8 @@ const initialState = {
     latitude: 48.29149,
     longitude: 25.94034
   },
-  error: null
+  error: false,
+  msg: ''
 };
 
 export default (
@@ -28,13 +30,22 @@ export default (
       return {
         ...state,
         fetching: false,
-        userGeolocation: payload
+        userGeolocation: payload,
+        msg: 'Geolocation successfully received data'
       };
 
     case FETCH_GEOLOCATION_FAILURE:
       return {
         ...initialState,
-        error: payload
+        error: true,
+        msg: payload.message
+      };
+
+    case HIDE_GEOLOCATION_MSG:
+      return {
+        ...initialState,
+        error: false,
+        msg: ''
       };
 
     default:

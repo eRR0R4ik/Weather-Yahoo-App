@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
 
 const useStyles: any = makeStyles(
   theme =>
@@ -16,6 +17,10 @@ const useStyles: any = makeStyles(
       },
       heroButtons: {
         marginTop: theme.spacing(4)
+      },
+      date: {
+        marginTop: theme.spacing(4),
+        textAlign: 'center'
       },
       cardGrid: {
         paddingTop: theme.spacing(8),
@@ -41,16 +46,17 @@ const useStyles: any = makeStyles(
     } as any)
 );
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 interface MainProps {
   getWeather?: any;
   weatherData?: any;
+  fechedAt?: string;
 }
 
 const Main: React.SFC<MainProps> = props => {
   const classes = useStyles();
-
+  const { location = null, forecasts = [] } = props.weatherData || {};
+  const { fechedAt } = props;
+  const unit = localStorage.getItem('lastRequestedUnit');
   return (
     <React.Fragment>
       <main>
@@ -64,7 +70,8 @@ const Main: React.SFC<MainProps> = props => {
               color="textPrimary"
               gutterBottom
             >
-              Weather at Kiev
+              {!location && `Weather Yahoo API`}
+              {location && `Weather at ${location.city}`}
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
@@ -78,32 +85,43 @@ const Main: React.SFC<MainProps> = props => {
                   </Button>
                 </Grid>
               </Grid>
+              <div className={classes.date}>
+                {location && `Last fetched ${fechedAt}`}
+              </div>
             </div>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <div className={classes.cardMedia}>
-                    <div className={classes.headerTitle}>
-                      <Typography variant="h3" component="h2">
-                        10 C
-                      </Typography>
-                      <Typography>Clear Sky</Typography>
+            {forecasts.map((item: any, idx: number) => {
+              const day = moment.unix(item.date).format('dddd');
+              const month = moment.unix(item.date).format('DD MMMM');
+
+              return (
+                <Grid item key={`${item + idx}`} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <div className={classes.cardMedia}>
+                      <div className={classes.headerTitle}>
+                        <Typography variant="h5" component="h4">
+                          Low: {item.low} {unit && unit.toUpperCase()}
+                        </Typography>
+                        <Typography variant="h5" component="h4">
+                          High: {item.high} {unit && unit.toUpperCase()}
+                        </Typography>
+                        <Typography>{item.text}</Typography>
+                      </div>
                     </div>
-                  </div>
-                  <CardContent className={classes.cardContent}>
-                    <Typography variant="h5" component="h2">
-                      Monday
-                    </Typography>
-                    <Typography>11 February</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+                    <CardContent className={classes.cardContent}>
+                      <Typography variant="h5" component="h2">
+                        {day}
+                      </Typography>
+                      <Typography>{month}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
         </Container>
       </main>

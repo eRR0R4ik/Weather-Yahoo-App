@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
@@ -30,7 +29,7 @@ const useStyles: any = makeStyles(
 );
 
 interface SettingsProps {
-  unitFormat?: string;
+  unitFormat?: any;
   changeUnitFormat?: any;
   getLocation?: any;
   coords?: any;

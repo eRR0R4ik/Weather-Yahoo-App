@@ -2,14 +2,19 @@ import {
   FETCH_WEATHER_START,
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER_FAILURE,
-  CHANGE_UNIT_FORMAT
+  CHANGE_UNIT_FORMAT,
+  HIDE_WEATHER_MSG
 } from '../shared';
+const dataJson: any = localStorage.getItem('initWeather');
+const parsedObj = JSON.parse(dataJson) || {}; // also we could use lodash here
 
 const initialState = {
   fetching: false,
-  weatherData: null,
+  weatherData: parsedObj.data || null,
+  fechedAt: parsedObj.fechedAt || null,
   unitFormat: 'f',
-  error: null
+  error: false,
+  msg: ''
 };
 
 export default (
@@ -27,19 +32,29 @@ export default (
       return {
         ...state,
         fetching: false,
-        data: payload
+        weatherData: payload.data,
+        fechedAt: payload.fechedAt,
+        msg: 'Weather successfully fetched'
       };
 
     case FETCH_WEATHER_FAILURE:
       return {
         ...state,
-        error: payload
+        error: true,
+        msg: payload
       };
 
     case CHANGE_UNIT_FORMAT:
       return {
         ...state,
         unitFormat: payload
+      };
+
+    case HIDE_WEATHER_MSG:
+      return {
+        ...state,
+        error: false,
+        msg: ''
       };
 
     default:

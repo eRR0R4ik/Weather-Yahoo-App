@@ -8,3 +8,5 @@ export const CONSUMER_KEY: string =
 
 export const CONSUMER_SECRET: string =
   'de89de4f098cd26fbe0c8c203a3e93ff7ad9ed6a';
+
+export const MSG_HIDE_TIME = 3000;

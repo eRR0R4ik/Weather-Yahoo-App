@@ -19,11 +19,11 @@ class Settings extends Component<SettingsProps, SettingsState> {
 }
 
 const mapStateToProps = ({
-  weather: { unitFormat },
-  geolocation: { userGeolocation }
+  geolocation: { userGeolocation },
+  weather: { unitFormat }
 }: any) => ({
-  unitFormat,
-  coords: userGeolocation
+  coords: userGeolocation,
+  unitFormat
 });
 
 export default connect(

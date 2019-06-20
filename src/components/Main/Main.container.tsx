@@ -19,8 +19,9 @@ class Main extends Component<MainProps, MainState> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  weatherData: state
+const mapStateToProps = ({ weather: { weatherData, fechedAt } }: any) => ({
+  weatherData: weatherData,
+  fechedAt
 });
 
 export default connect(
