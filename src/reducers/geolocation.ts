@@ -43,7 +43,7 @@ export default (
 
     case HIDE_GEOLOCATION_MSG:
       return {
-        ...initialState,
+        ...state,
         error: false,
         msg: ''
       };

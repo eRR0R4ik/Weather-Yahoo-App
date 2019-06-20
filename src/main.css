@@ -1,0 +1,4 @@
+.custom-icon path:first-child {
+  stroke: transparent;
+  fill: transparent;
+}

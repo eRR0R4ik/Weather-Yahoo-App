@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
+import Settings from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -31,7 +31,7 @@ export default function Header() {
             </Typography>
           </NavLink>
           <NavLink to="/settings" className={classes.icon}>
-            <CameraIcon />
+            <Settings className="custom-icon" />
           </NavLink>
         </Toolbar>
       </AppBar>
