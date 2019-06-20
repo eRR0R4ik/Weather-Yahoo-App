@@ -12,7 +12,7 @@ const initialState = {
   fetching: false,
   weatherData: parsedObj.data || null,
   fechedAt: parsedObj.fechedAt || null,
-  unitFormat: 'f',
+  unitFormat: localStorage.getItem('lastRequestedUnit') || 'f',
   error: false,
   msg: ''
 };
